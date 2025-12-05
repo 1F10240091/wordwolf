@@ -1,3 +1,82 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
+
+class User(AbstractUser):
+    win_num = models.IntegerField(default=0)
+    lose_num = models.IntegerField(default=0)
+    def __str__(self):
+        return self.username
+
+class WordSet(models.Model):
+    main_word = models.CharField(max_length=100)
+    wolf_word = models.CharField(max_length=100)
+    category = models.CharField(max_length=50, blank=True)
+
+    def __str__(self):
+        return f"{self.main_word} / {self.wolf_word}"
+
+class Question(models.Model):
+    text = models.CharField(max_length=200)
+    category = models.CharField(max_length=50, blank=True)
+
+    def __str__(self):
+        return self.text
+
+class Room(models.Model):
+    room_name = models.CharField(max_length=50)
+    max_user_num = models.IntegerField(default=6)
+    
+    @property
+    def is_full(self):
+        return self.members.count() >= self.max_user_num
+
+    class Status(models.TextChoices):
+        WAITING = 'waiting', '待機中'
+        PLAYING = 'playing', 'プレイ中'
+        FINISHED = 'finished', '終了'
+    status = models.CharField(
+        max_length=20,
+        choices=Status.choices,
+        default=Status.WAITING
+    )
+
+    word_set = models.ForeignKey(WordSet, null=True, blank=True, on_delete=models.SET_NULL)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.room_name} ({self.status})"
+
+class RoomQuestion(models.Model):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='questions')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    order = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.room} - Q{self.order}"
+
+class Member(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='members')
+
+    class Role(models.TextChoices):
+        WOLF = 'wolf', '狼'
+        CITIZEN = 'citizen', '市民'
+    role = models.CharField(
+        max_length=20,
+        choices=Role.choices,
+        default=Role.CITIZEN
+    )
+
+    word = models.CharField(max_length=100, blank=True)
+    vote_target = models.ForeignKey(
+        'self',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='voted_by'
+    )
+    joined_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f"{self.user.username} in {self.room.room_name}"
