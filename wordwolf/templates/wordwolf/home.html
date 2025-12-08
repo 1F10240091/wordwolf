@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>start</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Word Wolf</h1>
+        <nav>
+            </nav>
+    </header>
+   
+    <main id="content">
+        {% block content %}
+            <a href="#" class="button">ログイン</a>
+            <a href="#" class="button">ゲストでログイン</a>
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; CS4-2025-CLASS6-TEAM2-PROJECT</p>
+    </footer>
+    
+    {% block extra_js %}
+    {% endblock %}
+</body>
+</html>
