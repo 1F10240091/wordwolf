@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}WordWolf{% endblock %}</title>
+    <!-- Bootstrap 5.3.0 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- 
+        【デザイン担当者の方へ】
+        ここは全ページ共通のスタイル定義です。
+        以下の :root 内の変数を変更することで、全体の配色を簡単に変更できます。
+    -->
+    <style>
+        :root {
+            /* --- カラーパレット設定 --- */
+            --bg-color: #000000;           /* 全体の背景色 */
+            --text-color: #ffffff;         /* 基本の文字色 */
+            
+            --card-bg-color: #1c1c1c;      /* カード（枠）の背景色 */
+            --card-border-color: #333333;  /* カードの枠線色 */
+            
+            --input-bg-color: #2c2c2c;     /* 入力フォームの背景色 */
+            --input-border-color: #444444; /* 入力フォームの枠線色 */
+            
+            --accent-color: #800020;       /* アクセントカラー（メインの色） */
+            --accent-hover-color: #500014; /* アクセントカラー（ホバー時） */
+            --accent-shadow-color: rgba(128, 0, 32, 0.25); /* フォーカス時の光彩 */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        .card {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--card-border-color);
+            color: var(--text-color);
+        }
+        .form-control {
+            background-color: var(--input-bg-color);
+            border: 1px solid var(--input-border-color);
+            color: var(--text-color);
+        }
+        .form-control:focus {
+            background-color: var(--input-bg-color);
+            border-color: var(--accent-color);
+            color: var(--text-color);
+            box-shadow: 0 0 0 0.25rem var(--accent-shadow-color);
+        }
+        .btn-accent {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            border: none;
+        }
+        .btn-accent:hover {
+            background-color: var(--accent-hover-color);
+            color: var(--text-color);
+        }
+        .text-accent {
+            color: var(--accent-color);
+        }
+        a.text-accent:hover {
+            color: var(--accent-hover-color);
+        }
+        /* form.as_p styling */
+        p {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .helptext {
+            display: block;
+            margin-top: 0.25rem;
+            font-size: 0.875em;
+            color: #adb5bd;
+        }
+        ul.errorlist {
+            padding-left: 0;
+            list-style: none;
+            color: #dc3545;
+        }
+        {% block extra_css %}{% endblock %}
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

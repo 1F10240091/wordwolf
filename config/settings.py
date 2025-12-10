@@ -117,4 +117,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'wordwolf:home'
+LOGOUT_REDIRECT_URL = 'wordwolf:home'
+
 AUTH_USER_MODEL = 'wordwolf.User'

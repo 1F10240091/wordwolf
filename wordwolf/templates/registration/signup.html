@@ -1,0 +1,30 @@
+<!-- URL: http://127.0.0.1:8000/wordwolf/signup/ -->
+{% extends 'base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-lg">
+            <div class="card-body p-4">
+                <h1 class="text-center mb-4 text-accent">Sign Up</h1>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {{ form.as_p }}
+                    </div>
+                    <div class="d-grid gap-2">
+                        <input type="submit" value="Sign Up" class="btn btn-accent" />
+                    </div>
+                </form>
+
+                <div class="text-center mt-3">
+                    <a href="{% url 'login' %}" class="text-decoration-none text-accent">Already have an account? Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
